@@ -12,6 +12,41 @@ A modern React dashboard built with Vite, TailwindCSS, React Router v7, and Cler
 - **Business Management**: Staff, projects, tasks, timesheets, and mail management
 - **Automation**: Bot automation with scheduled and trigger-based tasks
 
+## 🏢 Phase 1 Core Business Features
+
+### Customer Management
+
+- Complete customer relationship management
+- Customer list with search and filtering
+- Add/edit/delete customers with status tracking
+- Revenue tracking per customer
+- Contact information management
+
+### Sales Pipeline
+
+- Lead tracking across all sales stages
+- Pipeline value and weighted value calculations
+- Stage-based filtering (Prospect → Qualified → Proposal → Negotiation → Closed)
+- Deal value and probability tracking
+- Expected close dates
+
+### Invoice & Billing
+
+- Invoice creation and management
+- Multiple status tracking (Draft, Sent, Paid, Overdue, Cancelled)
+- Payment tracking and revenue reporting
+- Customer billing information
+- Invoice download and email functionality
+
+### Reports & Analytics
+
+- Revenue and growth metrics
+- Customer acquisition tracking
+- Project status analytics
+- Interactive charts and visualizations
+- Top customer performance
+- Team productivity metrics
+
 ## 🤖 AI Bot Features
 
 ### ChatGPT Integration
@@ -43,7 +78,7 @@ A modern React dashboard built with Vite, TailwindCSS, React Router v7, and Cler
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Jim-devENG/blueinc-dashboard.git
    cd blueinc-dashboard
    ```
 
