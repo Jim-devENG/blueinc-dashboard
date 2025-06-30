@@ -1,27 +1,19 @@
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "react-router";
+import { Outlet, Scripts } from "react-router";
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
+// Get Clerk publishable key from environment variable
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+// Development fallback - remove this in production
+const isDevelopment = import.meta.env.DEV;
+
+// Check if the Clerk key is valid (not a placeholder)
+const isValidClerkKey = CLERK_PUBLISHABLE_KEY && 
+  CLERK_PUBLISHABLE_KEY !== 'pk_test_YOUR_PUBLISHABLE_KEY' &&
+  CLERK_PUBLISHABLE_KEY !== 'pk_test_Y291cmFnZW91cy1jb3lvdGUtODQuY2xlcmsuYWNjb3VudHMuZGV2JA';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -29,12 +21,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" />
       </head>
       <body>
         {children}
-        <ScrollRestoration />
         <Scripts />
       </body>
     </html>
@@ -42,21 +34,49 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  console.log("App component rendering, isDevelopment:", isDevelopment, "isValidClerkKey:", isValidClerkKey);
+  
+  // In development, if no valid Clerk key is provided, render without authentication
+  if (isDevelopment && !isValidClerkKey) {
+    console.log("Rendering development mode without authentication");
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <div className="p-4">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+            <h3 className="text-yellow-800 font-medium">Development Mode</h3>
+            <p className="text-yellow-700 text-sm">
+              Clerk authentication is disabled. Set a valid VITE_CLERK_PUBLISHABLE_KEY in your .env file to enable authentication.
+            </p>
+          </div>
+        </div>
+        <Outlet />
+      </div>
+    );
+  }
+
+  // Production or when valid Clerk key is provided
+  if (!isValidClerkKey) {
+    throw new Error("Missing valid Clerk Publishable Key");
+  }
+
+  return (
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+      <SignedIn>
+        <Outlet />
+      </SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </ClerkProvider>
+  );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({ error }: { error: unknown }) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }

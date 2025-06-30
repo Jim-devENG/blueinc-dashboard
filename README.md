@@ -1,87 +1,197 @@
-# Welcome to React Router!
+# Blueinc Dashboard
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern React dashboard built with Vite, TailwindCSS, React Router v7, and Clerk.js authentication. Features AI-powered bots with ChatGPT integration for intelligent business assistance.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## 🚀 Features
 
-## Features
+- **Modern UI/UX**: Beautiful, responsive design with dark/light mode support
+- **Authentication**: Secure user authentication with Clerk.js
+- **Protected Routes**: Role-based access control
+- **AI-Powered Bots**: Intelligent chatbots with ChatGPT API integration
+- **Real-time Chat**: Advanced conversation capabilities with context awareness
+- **Business Management**: Staff, projects, tasks, timesheets, and mail management
+- **Automation**: Bot automation with scheduled and trigger-based tasks
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 🤖 AI Bot Features
 
-## Getting Started
+### ChatGPT Integration
+
+- **Real AI Responses**: Powered by OpenAI's GPT-3.5-turbo
+- **Context Awareness**: Bots remember conversation history
+- **Bot-Specific Intelligence**: Specialized responses for different business areas
+- **Fallback System**: Intelligent responses when API is unavailable
+- **Cost Optimization**: Configurable parameters for efficient usage
+
+### Bot Types
+
+- **SupportBot**: Technical support and troubleshooting
+- **HRBot**: Human resources and employee assistance
+- **FinanceBot**: Financial queries and expense management
+- **SalesBot**: Sales support and lead management
+- **MarketingBot**: Marketing strategy and campaign assistance
+
+## 🛠️ Setup
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- OpenAI API key (for ChatGPT integration)
 
 ### Installation
 
-Install the dependencies:
+1. **Clone the repository**
 
-```bash
-npm install
+   ```bash
+   git clone <repository-url>
+   cd blueinc-dashboard
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+
+   Create a `.env` file in the `blueinc-dashboard` directory:
+
+   ```env
+   # Clerk Authentication
+   VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+
+   # OpenAI API Key (Optional - for ChatGPT integration)
+   VITE_OPENAI_API_KEY=your_openai_api_key
+   ```
+
+4. **Get API Keys**
+
+   - **Clerk**: Sign up at [clerk.com](https://clerk.com) and get your publishable key
+   - **OpenAI**: Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+## 🤖 ChatGPT API Setup
+
+For enhanced bot capabilities, follow the detailed setup guide in [CHATGPT_SETUP.md](./CHATGPT_SETUP.md).
+
+### Quick Setup
+
+1. Get your OpenAI API key from [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Add it to your `.env` file: `VITE_OPENAI_API_KEY=sk-your-key-here`
+3. Restart your development server
+4. Test the API using the validator in the Bot Console
+
+### Features with ChatGPT
+
+- **Real AI responses** instead of pre-written scripts
+- **Context awareness** - bots remember conversation history
+- **Dynamic responses** - no two conversations are exactly the same
+- **Professional tone** - responses tailored to business context
+- **Multi-turn conversations** - handle complex discussions
+
+## 📁 Project Structure
+
+```
+blueinc-dashboard/
+├── app/
+│   ├── components/          # Reusable UI components
+│   ├── layouts/            # Layout components
+│   ├── lib/               # Utilities and services
+│   │   └── chatgpt.ts     # ChatGPT API integration
+│   ├── pages/             # Page components
+│   └── routes/            # Route definitions
+├── public/                # Static assets
+└── package.json
 ```
 
-### Development
+## 🎯 Usage
 
-Start the development server with HMR:
+### Authentication
 
-```bash
-npm run dev
-```
+- Users are redirected to login if not authenticated
+- Protected routes require valid authentication
+- User information is displayed in the navbar
 
-Your application will be available at `http://localhost:5173`.
+### Bot Console
 
-## Building for Production
+- Create and manage AI-powered bots
+- Chat with bots for intelligent assistance
+- Configure automation tasks
+- Monitor bot status and activity
 
-Create a production build:
+### Business Management
 
-```bash
-npm run build
-```
+- **Staff**: Manage employee information
+- **Projects**: Track project progress and details
+- **Tasks**: Organize and assign tasks
+- **Timesheets**: Monitor time tracking and leave
+- **Mail**: Email management interface
 
-## Deployment
+## 🔧 Development
 
-### Docker Deployment
+### Available Scripts
 
-To build and run using Docker:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
-```bash
-docker build -t my-app .
+### Tech Stack
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: TailwindCSS
+- **Routing**: React Router v7
+- **Authentication**: Clerk.js
+- **AI Integration**: OpenAI GPT-3.5-turbo
+- **Icons**: Lucide React
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## 🔒 Security
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+- API keys are stored in environment variables
+- Authentication is handled securely by Clerk.js
+- No sensitive data is stored in the frontend
+- HTTPS is recommended for production
 
-### DIY Deployment
+## 📊 Cost Considerations
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+### ChatGPT API Costs
 
-Make sure to deploy the output of `npm run build`
+- **GPT-3.5-turbo**: ~$0.002 per 1K tokens
+- **Typical conversation**: 50-200 tokens per exchange
+- **Estimated cost**: $0.01-$0.05 per conversation
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+### Optimization Tips
 
-## Styling
+- Set reasonable token limits
+- Monitor usage through OpenAI dashboard
+- Use fallback responses for simple queries
+- Implement rate limiting if needed
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For issues and questions:
+
+1. Check the browser console for error messages
+2. Verify your API keys are valid
+3. Review the ChatGPT setup guide
+4. Check OpenAI service status
 
 ---
 
-Built with ❤️ using React Router.
+**Built with ❤️ for modern business management**

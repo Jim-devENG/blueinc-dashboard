@@ -1,13 +1,6 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import DashboardHome from "../pages/DashboardHome";
 
 export default function Home() {
-  return <Welcome />;
+  console.log("Home component rendering");
+  return <DashboardHome />;
 }
