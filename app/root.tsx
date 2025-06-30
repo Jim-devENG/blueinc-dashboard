@@ -36,6 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   console.log("App component rendering, isDevelopment:", isDevelopment, "isValidClerkKey:", isValidClerkKey);
+  console.log("Clerk Key:", import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
   
   // If no valid Clerk key is provided, render without authentication (demo mode)
   if (!isValidClerkKey) {

@@ -43,3 +43,5 @@ coverage/
 
 # React Router
 /.react-router/
+
+.vercel
