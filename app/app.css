@@ -7,7 +7,7 @@
 /* Custom scrollbar for sidebar */
 .sidebar-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
 }
 
 .sidebar-scrollbar::-webkit-scrollbar {

@@ -63,7 +63,7 @@ A modern React dashboard built with Vite, TailwindCSS, React Router v7, and Cler
 - **HRBot**: Human resources and employee assistance
 - **FinanceBot**: Financial queries and expense management
 - **SalesBot**: Sales support and lead management
-- **MarketingBot**: Marketing strategy and campaign assistance
+- **MarketingBot**: Marketing strategy and campaign assistance (anything you're reading here is just for the purpose of redeploy)
 
 ## 🛠️ Setup
 

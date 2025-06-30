@@ -35,8 +35,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  console.log("App component rendering, isDevelopment:", isDevelopment, "isValidClerkKey:", isValidClerkKey);
-  console.log("Clerk Key:", import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
+  // Enhanced debugging
+  console.log("=== CLERK DEBUG INFO ===");
+  console.log("Environment:", import.meta.env.MODE);
+  console.log("Is Development:", isDevelopment);
+  console.log("Raw Clerk Key:", CLERK_PUBLISHABLE_KEY);
+  console.log("Key Type:", typeof CLERK_PUBLISHABLE_KEY);
+  console.log("Key Length:", CLERK_PUBLISHABLE_KEY ? CLERK_PUBLISHABLE_KEY.length : 0);
+  console.log("Key Starts with 'pk_':", CLERK_PUBLISHABLE_KEY ? CLERK_PUBLISHABLE_KEY.startsWith('pk_') : false);
+  console.log("Is Valid Clerk Key:", isValidClerkKey);
+  console.log("All env vars:", Object.keys(import.meta.env).filter(key => key.includes('CLERK')));
+  console.log("=== END DEBUG INFO ===");
   
   // If no valid Clerk key is provided, render without authentication (demo mode)
   if (!isValidClerkKey) {
@@ -49,6 +58,12 @@ export default function App() {
             <p className="text-blue-700 text-sm">
               Running in demo mode without authentication. Set a valid VITE_CLERK_PUBLISHABLE_KEY in your environment variables to enable full authentication.
             </p>
+            <div className="mt-2 text-xs text-blue-600">
+              <p>Debug Info:</p>
+              <p>Key Present: {CLERK_PUBLISHABLE_KEY ? 'Yes' : 'No'}</p>
+              <p>Key Length: {CLERK_PUBLISHABLE_KEY ? CLERK_PUBLISHABLE_KEY.length : 0}</p>
+              <p>Starts with 'pk_': {CLERK_PUBLISHABLE_KEY ? CLERK_PUBLISHABLE_KEY.startsWith('pk_') : false}</p>
+            </div>
           </div>
         </div>
         <Outlet />
