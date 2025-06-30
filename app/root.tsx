@@ -13,7 +13,8 @@ const isDevelopment = import.meta.env.DEV;
 // Check if the Clerk key is valid (not a placeholder)
 const isValidClerkKey = CLERK_PUBLISHABLE_KEY && 
   CLERK_PUBLISHABLE_KEY !== 'pk_test_YOUR_PUBLISHABLE_KEY' &&
-  CLERK_PUBLISHABLE_KEY !== 'pk_test_Y291cmFnZW91cy1jb3lvdGUtODQuY2xlcmsuYWNjb3VudHMuZGV2JA';
+  CLERK_PUBLISHABLE_KEY !== 'pk_test_Y291cmFnZW91cy1jb3lvdGUtODQuY2xlcmsuYWNjb3VudHMuZGV2JA' &&
+  CLERK_PUBLISHABLE_KEY !== 'pk_test_ZXhhbXBsZS5jbGVyay5hY2NvdW50cy5kZXYk';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,16 +37,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   console.log("App component rendering, isDevelopment:", isDevelopment, "isValidClerkKey:", isValidClerkKey);
   
-  // In development, if no valid Clerk key is provided, render without authentication
-  if (isDevelopment && !isValidClerkKey) {
-    console.log("Rendering development mode without authentication");
+  // If no valid Clerk key is provided, render without authentication (demo mode)
+  if (!isValidClerkKey) {
+    console.log("Rendering demo mode without authentication");
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <div className="p-4">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-            <h3 className="text-yellow-800 font-medium">Development Mode</h3>
-            <p className="text-yellow-700 text-sm">
-              Clerk authentication is disabled. Set a valid VITE_CLERK_PUBLISHABLE_KEY in your .env file to enable authentication.
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <h3 className="text-blue-800 font-medium">Demo Mode</h3>
+            <p className="text-blue-700 text-sm">
+              Running in demo mode without authentication. Set a valid VITE_CLERK_PUBLISHABLE_KEY in your environment variables to enable full authentication.
             </p>
           </div>
         </div>
@@ -54,11 +55,7 @@ export default function App() {
     );
   }
 
-  // Production or when valid Clerk key is provided
-  if (!isValidClerkKey) {
-    throw new Error("Missing valid Clerk Publishable Key");
-  }
-
+  // Production with valid Clerk key
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <SignedIn>
